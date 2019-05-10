@@ -1,7 +1,10 @@
 # Apigee as OIDC Identity Provider for an existing Authentication Service.
 
 
-The solution is based on ["Apigee as standards based authentication Interface for an existing Enterprise Identity Store"](https://github.com/nas-hub/Apigee-Enterprise-Security-Design-Patterns/tree/master/IAM-Integration/IdentityStore-Pattern) Reference Architecture. This is a fully deployable solution: Follow instructions below to install this solution on your Apigee Org.
+The solution is based on this Reference Architecture:<br>
+["Apigee as standards based authentication Interface for an existing Enterprise Identity Store"](https://github.com/nas-hub/Apigee-Enterprise-Security-Design-Patterns/tree/master/IAM-Integration/IdentityStore-Pattern). 
+
+This is a fully deployable solution, follow instructions [below](https://github.com/nas-hub/apigee-as-oidc-idp-for-existing-authentication-service#pre-requisites) to install this solution on your Apigee Org.
 
 
 
