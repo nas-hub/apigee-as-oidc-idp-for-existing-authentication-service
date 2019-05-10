@@ -1,4 +1,4 @@
-# Apigee as OIDC Identity Provider for existing Authentication Service.([OIDC](https://openid.net/developers/specs/)).
+# Apigee as OIDC Identity Provider for an existing Authentication Service.
 
 
 A deployable solution implementing the [end-user Authentication for API Access Reference Architecture](https://apigeedemo.net/config)
@@ -7,8 +7,10 @@ A deployable solution implementing the [end-user Authentication for API Access R
 
 ## Solution Architecture: 
 
-### Architecture Modules:
+### Architecture Modules
+
 **Authentication Service** :
+
 Authentication Service module provides end user authentication leveraging user credentials. The service authenticates end user credentials and returns a JWT upon successful authentication. Typically this is an intranet service abstracting underlying Identity Store like Active Directory, LDAP or SQL/NoSQL User DB.
 
 
@@ -16,9 +18,9 @@ Authentication Service module provides end user authentication leveraging user c
 
 Apigee abstracts the above **Authentication Service** and provides an OIDC Identity Provider Interface. This OIDC interface provides consistent standards based authentication for all Mobile and Web apps across enterprise. Upon successful installation of this solution you will have Apigee providing the following:
 
-- [OIDC Well Known Configuration](https://developers.google.com/identity/protocols/OpenIDConnect).
-- [OIDC JWKS Endpoint](https://developer.okta.com/docs/api/resources/oidc/#endpoints)
-- [OIDC Authorize and Token Interfaces](https://documentation.pingidentity.com/pingfederate/pf84/#adminGuide/concept/openIdConnect.html) 
+- [OIDC Well Known Configuration](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig).
+- [OIDC JWKS Endpoint](https://tools.ietf.org/html/draft-ietf-jose-json-web-key-41#appendix-A.1)
+- [OIDC Authorize and Token Interfaces](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) 
 
 **User Agent Module** : 
 
