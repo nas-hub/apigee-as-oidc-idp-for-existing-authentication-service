@@ -1,7 +1,7 @@
 # Apigee as OIDC Identity Provider for an existing Authentication Service.
 
 
-A deployable solution implementing the [end-user Authentication for API Access Reference Architecture](https://apigeedemo.net/config)
+The solution is based on ["Apigee as standards based authentication Interface for an existing Enterprise Identity Store"](https://github.com/nas-hub/Apigee-Enterprise-Security-Design-Patterns/tree/master/IAM-Integration/IdentityStore-Pattern) Reference Architecture. This is a fully deployable solution: Follow instructions below to install this solution on your Apigee Org.
 
 
 
@@ -9,12 +9,12 @@ A deployable solution implementing the [end-user Authentication for API Access R
 
 ### Architecture Modules
 
-**Authentication Service** :
+**1. Authentication Service** :
 
 Authentication Service module provides end user authentication leveraging user credentials. The service authenticates end user credentials and returns a JWT upon successful authentication. Typically this is an intranet service abstracting underlying Identity Store like Active Directory, LDAP or SQL/NoSQL User DB.
 
 
-**OIDC Identity Provider Service** :
+**2. OIDC Identity Provider Service** :
 
 Apigee abstracts the above **Authentication Service** and provides an OIDC Identity Provider Interface. This OIDC interface provides consistent standards based authentication for all Mobile and Web apps across enterprise. Upon successful installation of this solution you will have Apigee providing the following:
 
@@ -22,11 +22,11 @@ Apigee abstracts the above **Authentication Service** and provides an OIDC Ident
 - [OIDC JWKS Endpoint](https://tools.ietf.org/html/draft-ietf-jose-json-web-key-41#appendix-A.1)
 - [OIDC Authorize and Token Interfaces](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) 
 
-**User Agent Module** : 
+**3. User Agent Module** : 
 
 User Agent can be a Browser App (Single Page App, Smart Client based App) or a Native Mobile App.
 
-**OIDC Relying Party** : 
+**4. OIDC Relying Party** : 
 
 Module that initiates the OIDC handshake to authenticate end user. It is the Relying Party that exchanges OIDC Identity Provider issued Authorization Code with **Access Token** and **Id Token**.
 
@@ -34,7 +34,7 @@ Module that initiates the OIDC handshake to authenticate end user. It is the Rel
 
 ## Simplified Solution Flow Diagram
 
-|  |
+|  Highlevel Solution Flow|
 |--------------------------|
 |![alt text](./assets/images/sol_arch_simple.png "Simplified Solution Flow.")|
 | |
@@ -71,7 +71,7 @@ Module that initiates the OIDC handshake to authenticate end user. It is the Rel
 
 
 ## Pre-Requisites:  
-#### Identity Provider Configuration
+#### __Pre-Requisit__ 1. Identity Provider Configuration
 1. As OIDC Identity Provider this module generates RSA signed JWT based ID Token. You need to provide the RSA key information in JWKS format. You can use [node based pem-to-jwk](https://www.npmjs.com/package/rsa-pem-to-jwk) package to generate the needed "n", "e" parameters.
 2. Ensure you have the Authentication Service endpoint ready, that takes end user credentials and returns JWT token. Also note the user attributes embeded in JWT, you will need to map these user attributes in __EV_CICP_Login_Response__ policy.
 3. Ensure you have [Maven](https://maven.apache.org/) installed and is configured in the PATH variable on your terminal.
@@ -80,7 +80,7 @@ Module that initiates the OIDC handshake to authenticate end user. It is the Rel
 
 
 
-#### You will need the following information for configuring the :
+#### 2. You will need the following information for configuring the :
 
 Update the following properties 
 | Property |  Description |
