@@ -70,7 +70,8 @@ Module that initiates the OIDC handshake to authenticate end user. It is the Rel
 
 
 
-## Pre-Requisites:  
+## Pre-Requisites: 
+
 #### Pre-Requisit (1): Identity Provider Configuration
 1. As OIDC Identity Provider this module generates RSA signed JWT based ID Token. You need to provide the RSA key information in JWKS format. You can use [node based pem-to-jwk](https://www.npmjs.com/package/rsa-pem-to-jwk) package to generate the needed "n", "e" parameters.
 2. Ensure you have the Authentication Service endpoint ready, that takes end user credentials and returns JWT token. Also note the user attributes embeded in JWT, you will need to map these user attributes in __EV_CICP_Login_Response__ policy.
@@ -80,9 +81,8 @@ Module that initiates the OIDC handshake to authenticate end user. It is the Rel
 
 
 
-#### Pre-Requisit (2): You will need the following information for configuring the :
+#### Pre-Requisit (2): Update the following properties in [config.properties](./config.properties)
 
-Update the following properties in [config.properties](./config.properties)
 
 | Property |  Description |
 |  :---: | :-- |
