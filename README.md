@@ -71,16 +71,16 @@ Module that initiates the OIDC handshake to authenticate end user. It is the Rel
 
 
 ## Pre-Requisites:  
-#### __Pre-Requisit__ 1. Identity Provider Configuration
+#### Pre-Requisit (1): Identity Provider Configuration
 1. As OIDC Identity Provider this module generates RSA signed JWT based ID Token. You need to provide the RSA key information in JWKS format. You can use [node based pem-to-jwk](https://www.npmjs.com/package/rsa-pem-to-jwk) package to generate the needed "n", "e" parameters.
 2. Ensure you have the Authentication Service endpoint ready, that takes end user credentials and returns JWT token. Also note the user attributes embeded in JWT, you will need to map these user attributes in __EV_CICP_Login_Response__ policy.
 3. Ensure you have [Maven](https://maven.apache.org/) installed and is configured in the PATH variable on your terminal.
-4. Ensure you have [Node and NPM](https://nodejs.org/en/) installed and configured in the PATH variable on your terminal.
+4. Ensure you have [Node and NPM](https://nodejs.org/en/) installed and configured in the PATH variable on your terminal. You will need to install NPM version 6.X or higher and Node Version 10.X or higher
 5. Ensure you have Relying Party Module ready to be configured with this Identity Provider module. You can also use [this apigee based Relying Party](https://github.com/nas-hub/enduser-authentication-for-api-access-via-oidc) solution.
 
 
 
-#### 2. You will need the following information for configuring the :
+#### Pre-Requisit (2): You will need the following information for configuring the :
 
 Update the following properties 
 | Property |  Description |
@@ -94,7 +94,7 @@ Update the following properties
 
 
 
-#### Apigee Account Registration:
+#### Pre-Requisit (2): Apigee Account Registration:
 You will need to register for a trial version of Apigee or have access to an Apigee Enterprise Organization.  You will need following details about your Apigee Account :-
 - Apigee Organization Name
 - Apigee Environment Name
@@ -103,17 +103,12 @@ You will need to register for a trial version of Apigee or have access to an Api
 
 Ensure you have access to your Apigee Organization where you want to deploy this solution.
 
-#### Maven In Path: 
-Make sure you have installed and configured Maven in the path.
-
-#### NPM and Node: 
-You will need to install NPM version 6.X or higher and Node Version 10.X or higher
 
 ## Installation Instruction: 
 
-The above solution is provided as a package as part of this project and can be configured following the below steps:
-- Clone the repo `git https://github.com/nas-hub/enduser-authentication-for-api-access-via-oidc`
-- Navigate to IdP_Pattern_1B_OIDC directory - `cd IdP_Pattern_1A_OIDC`
+The above solution can be configured following the below steps:
+- Clone the repo `git clone https://github.com/nas-hub/apigee-as-oidc-idp-for-existing-authentication-service.git`
+- Navigate to apigee-as-oidc-idp-for-existing-authentication-service directory.
 - Update the IDP configurations in the [config.properties](./config.properties)
 - Execute `npm install`
 - Execute `node setup.js` and follow the prompts
@@ -123,32 +118,37 @@ The above solution is provided as a package as part of this project and can be c
 
 | prompt |  Description |
 |  :--- | :-- |
-| **Please provide the Apigee Edge Organization name:** | Enter your Apigee Org Name.  |
-| **Please provide the Apigee Edge Environment name:** |  Enter your Apigee Org's environment where these policies will be deployed. |
-| **Please provide the Proxy name** | Enter a descriptive name for this new proxy.  |
-| **Please provide the Proxy basepath** | Enter the base path for this new proxy.  |
-| **Please provide the Apigee KeyValueMap name where the IDP configurations will be stored** | Enter the name of new KVM (Key Value Map) that will be created to store Identity Provider details provided in the config.properties  |
-| **Please provide the Apigee Edge username** |  Enter your Apigee Username |
-| **Please provide the Apigee Edge password** |  Enter your Apigee password |
+| **Enter the Apigee Edge Organization name:** | Enter your Apigee Org Name.  |
+| **Enter the Apigee Edge Environment name:** |  Enter your Apigee Org's environment where these policies will be deployed. |
+| **Enter the Hostname, this will be used for referring to JWKS Endpoint as well as .well-known configuration.** | Enter the Hostname, ensure you add the virtualhost host name configured in Apigee by name **secure**. |
+| **Enter the Proxy name** | Enter a descriptive name for this new proxy.  |
+| **Enter the Proxy basepath** | Enter the base path for this new proxy.  |
+| **Enter the Apigee KVM to store OIDC JWKS config.** | Enter the name of new KVM (Key Value Map) that will be created to store JWKS details provided in the config.properties  |
+| **Enter Key Id used to identify the public key in JWKS key list.** | Enter the Key Id that will be used by Relying Party to lookup the key from JWKS endpoint published list. |
+| **Enter JWT Issuer Name.** | Enter the JWT Issuer Name that will be used by Relying Party to validate the Issuer Name.|
+| **Enter the Backend Login Service endpoint with needed query params.** | Backend Login service endpoint that does user authentication. Ensure to include any needed query parameters |
+| **Enter API Product name to this proxy.** | Enter Apigee API Product name used to bundle the above proxies.|
+| **Enter Developer Application name to this proxy.** | Enter Apigee App name that is associated to the above product. Later you will be updating the Redirect URI that corresponds to the Relying Party.  |
+| **Enter the Apigee Edge username** |  Enter your Apigee Username |
+| **Enter provide the Apigee Edge password** |  Enter your Apigee password |
 | | |
-
-**Success** Upon successful deployment of this proxy, the *node setup.js* should provide you with a json config file under the **target** folder. 
 
 
 At this point the solution should be deployed on your Apigee Org, and should be ready for use. Follow below steps to see the solution working end to end.
 
+### Post Installation steps
+
+1. Login to Apigee [console](www.apigee.com/edge) and navigate to the above listed KVM and update the private_key value with the private key that will be used for generating the JWT Signature. Note that the private key value should be in PEM format.
+2. On Apigee [console](www.apigee.com/edge) navigate to the above created App and update the App's **Redirect URL** field with your Relying Parties URL.
+
 ### Testing the Solution
 
-1. Go to [Config Apigee Demo App](https://apigeedemo.net/config)
-2. Click the **Import** button on top right corner to import the above generated json config file.
-3. Click Update after importing the json config file.
-4. You should be on login page that has Login button.
-5. Clicking the Login Button will initiate a OIDC based login with your Identity Provider via Apigee. You can also turn on the **trace** for this proxy on Apigee to see the proxy functionality.
-6. At this point you should have Access Token issued by Apigee and should be able to introspect the token, as well as invoke APIs with this token.
+The best way to test the solution is to configure a [Relying Party](https://github.com/nas-hub/enduser-authentication-for-api-access-via-oidc) deploying this solution.
+If you already have a Relying Party, then update the **Redirect URL** field of the Application provisioned above.
 
 ### Report Issues
  
- [Please report issues here](https://github.com/nas-hub/enduser-authentication-for-api-access-via-oidc/issues/new)
+ [Please report issues here](https://github.com/nas-hub/apigee-as-oidc-idp-for-existing-authentication-service#pre-requisit-1-identity-provider-configuration/issues/new)
 
 
 
