@@ -82,7 +82,8 @@ Module that initiates the OIDC handshake to authenticate end user. It is the Rel
 
 #### Pre-Requisit (2): You will need the following information for configuring the :
 
-Update the following properties 
+Update the following properties in [config.properties](./config.properties)
+
 | Property |  Description |
 |  :---: | :-- |
 | **jwks.n.value** | Below JWKS n, e, use, kty attributes are defined in [JWKS Specs](https://tools.ietf.org/html/rfc7517#section-9.3). <br> Ensure the n value is in single line.<br> You can use [node based pem-to-jwk](https://www.npmjs.com/package/rsa-pem-to-jwk) package to generate the needed "n", "e" parameters. |
@@ -94,7 +95,7 @@ Update the following properties
 
 
 
-#### Pre-Requisit (2): Apigee Account Registration:
+#### Pre-Requisit (3): Apigee Account Registration:
 You will need to register for a trial version of Apigee or have access to an Apigee Enterprise Organization.  You will need following details about your Apigee Account :-
 - Apigee Organization Name
 - Apigee Environment Name
@@ -109,7 +110,6 @@ Ensure you have access to your Apigee Organization where you want to deploy this
 The above solution can be configured following the below steps:
 - Clone the repo `git clone https://github.com/nas-hub/apigee-as-oidc-idp-for-existing-authentication-service.git`
 - Navigate to apigee-as-oidc-idp-for-existing-authentication-service directory.
-- Update the IDP configurations in the [config.properties](./config.properties)
 - Execute `npm install`
 - Execute `node setup.js` and follow the prompts
 
