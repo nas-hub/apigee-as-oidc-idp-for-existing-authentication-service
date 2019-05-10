@@ -87,11 +87,11 @@ Update the following properties in [config.properties](./config.properties)
 | Property |  Description |
 |  :---: | :-- |
 | **jwks.n.value** | Below JWKS n, e, use, kty attributes are defined in [JWKS Specs](https://tools.ietf.org/html/rfc7517#section-9.3). <br> Ensure the n value is in single line.<br> You can use [node based pem-to-jwk](https://www.npmjs.com/package/rsa-pem-to-jwk) package to generate the needed "n", "e" parameters. |
-| **jwks.e.value** | e value following the above instructions.|
-| **jwks.use.value** | use must be set to signature verification with value __sig__ |
-| **jwks.kty.value** | Key Type supported by this solution is __RSA__ |
-| **jwt.signature.private_key.value** |For security purpose let us not add the PEM formated Private Key at this step.<br>Once th package is loaded on Apigee, this field must be updated in KVM directly with PEM encoded private key.
- |
+| **jwks.e.value** | Enter "e" value following the above instructions.|
+| **jwks.use.value** | This is set to __sig__ by default.|
+| **jwks.kty.value** | This is set to __RSA__ by default. |
+| **jwt.signature.private_key.value** |For security purpose do not add the PEM formated Private Key at this step.<br>Once this solution in deployed on Apigee, this value will be updated following the [Post Installation Steps](https://github.com/nas-hub/apigee-as-oidc-idp-for-existing-authentication-service#post-installation-steps).|
+| | |
 
 
 
